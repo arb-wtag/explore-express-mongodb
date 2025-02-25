@@ -4,6 +4,28 @@ const router=express.Router();
 const todoSchema=require('../schemas/todoSchema');
 const Todo=mongoose.models.Todo || mongoose.model('Todo',todoSchema);
 
+router.get('/active',async(req,res)=>{
+    const todo=new Todo();
+    const data= await todo.findActive();
+    res.status(200).json({
+        data,
+    });
+});
+
+router.get('/db',async(req,res)=>{
+    const data= await Todo.findByDB();
+    res.status(200).json({
+        data,
+    });
+});
+
+router.get('/language',async(req,res)=>{
+    const data= await Todo.find().byLanguage('joss');
+    res.status(200).json({
+        data,
+    });
+});
+
 router.get('/',async(req,res)=>{
     try{
         const data=await Todo.find({'status':'active'});
