@@ -3,6 +3,7 @@ const mongoose=require('mongoose');
 const router=express.Router();
 const todoSchema=require('../schemas/todoSchema');
 const Todo=mongoose.models.Todo || mongoose.model('Todo',todoSchema);
+const checkLogin=require('../middlewares/checkLogin')
 
 router.get('/active',async(req,res)=>{
     const todo=new Todo();
@@ -26,7 +27,7 @@ router.get('/language',async(req,res)=>{
     });
 });
 
-router.get('/',async(req,res)=>{
+router.get('/',checkLogin,async(req,res)=>{
     try{
         const data=await Todo.find({'status':'active'});
         res.status(200).json({

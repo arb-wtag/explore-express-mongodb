@@ -2,6 +2,7 @@ const express=require('express');
 const mongoose=require('mongoose');
 require('dotenv').config();
 const todoHandler=require('./routeHandlers/todoHandler');
+const userHandler=require('./routeHandlers/userHandler');
 
 const app=express();
 app.use(express.json());
@@ -13,6 +14,7 @@ mongoose.connect(`mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cl
   .catch((error)=>console.log(error));
 
 app.use('/todo',todoHandler);
+app.use('/user',userHandler);
 
 app.listen(port,()=>{
     console.log(`listening to port no ${port}`);
